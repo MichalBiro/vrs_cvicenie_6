@@ -25,6 +25,7 @@
 #include "usart.h"
 #include "lis3mdltr.h"
 #include "lsm6ds0.h"
+#include "hts221.h"
 #include "stdio.h"
 #include "string.h"
 #include "dma.h"
