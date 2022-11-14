@@ -35,3 +35,4 @@ void hts221_write_byte(uint8_t reg_addr, uint8_t value);
 
 
 #endif /* HTS221_H_ */
+
