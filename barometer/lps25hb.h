@@ -12,18 +12,17 @@
 #include "i2c.h"
 
 
-#define 	LPS25HB_DEVICE_ADDRESS_0				0xD4
-#define 	LPS25HB_DEVICE_ADDRESS_1				0xD6
+#define 	LPS25HB_DEVICE_ADDRESS_0				0xB8
+#define 	LPS25HB_DEVICE_ADDRESS_1				0xBB
 
-#define 	LPS25HB_WHO_AM_I_VALUE					0x68
+#define 	LPS25HB_WHO_AM_I_VALUE					0xBD
 #define 	LPS25HB_WHO_AM_I_ADDRES					0x0F
 
-#define 	LPS25HB_ADDRESS_CTRL1					0x10
+#define 	LPS25HB_ADDRESS_CTRL1					0x20
 
 /*  Tieto bude treba zmenit na potrebne adresy pre data z mojho senzora  */
-#define 	LPS25HB_ADDRESS_ACCX					0x28
-#define 	LPS25HB_ADDRESS_ACCY					0x2A
-#define 	LPS25HB_ADDRESS_ACCZ					0x2C
+#define 	LPS25HB_ADDRESS_PRESS					0x28   // XL
+
 
 #define 	LPS25HB_ADDRESS_TEMP_L					0x20
 

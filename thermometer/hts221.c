@@ -7,18 +7,18 @@
 
 #include "hts221.h"
 
-uint8_t addres = HTS221_DEVICE_ADDRESS_0;
+uint8_t addresHts = HTS221_DEVICE_ADDRESS_0;
 
 uint8_t hts221_read_byte(uint8_t reg_addr)
 {
 	uint8_t data = 0;
-	return *(i2c_master_read(&data, 1, reg_addr, addres, 0));
+	return *(i2c_master_read(&data, 1, reg_addr, addresHts, 0));
 }
 
 
 void hts221_write_byte(uint8_t reg_addr, uint8_t value)
 {
-	i2c_master_write(value, reg_addr, addres, 0);
+	i2c_master_write(value, reg_addr, addresHts, 0);
 }
 
 
@@ -43,7 +43,7 @@ uint8_t hts221_init(void)
 	}
 	else			//if the device is not found on one address, try another one
 	{
-		addres = HTS221_DEVICE_ADDRESS_1;
+		addresHts = HTS221_DEVICE_ADDRESS_1;
 		val = hts221_read_byte(HTS221_WHO_AM_I_ADDRES);
 		if(val == HTS221_WHO_AM_I_VALUE)
 		{
