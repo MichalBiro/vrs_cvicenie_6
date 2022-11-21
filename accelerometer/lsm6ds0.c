@@ -28,7 +28,7 @@ void lsm6ds0_readArray(uint8_t * data, uint8_t reg, uint8_t length)
 }
 
 
-int8_t lsm6ds0_get_temp()
+int8_t* lsm6ds0_get_temp()
 {
 	uint8_t temp[2];
 	lsm6ds0_readArray(temp, LSM6DS0_ADDRESS_TEMP_L, 2);

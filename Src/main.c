@@ -30,12 +30,16 @@
 #include "stdio.h"
 #include "string.h"
 #include "dma.h"
+#include "math.h"
 
 #define CHAR_BUFF_SIZE	30
 
-uint8_t temp = 0;
-float mag[3], acc[3];
-char formated_text[30], value_x[10], value_y[10], value_z[10];
+
+float mag[3], acc[3], press,temper[1];
+
+float temperature_out = 0, pressure_out = 0, altitude_i, sum=0, altitude_out = 0, cal_pressure = 1013.25; //CHECK
+int humidity_out = 0,i;
+char formated_text[50], value_x[10], value_y[10], value_z[10], value_temp[10];
 
 void SystemClock_Config(void);
 
@@ -55,13 +59,37 @@ int main(void)
   MX_USART2_UART_Init();
 
   lsm6ds0_init();
+  hts221_init();
+  lps25hb_init();
+
+  cal_pressure = lps25hb_get_pressure_calibration(); //CHECK
 
   while (1)
   {
 	  //os			   x      y        z
-	  lsm6ds0_get_acc(acc, (acc+1), (acc+2));
+	  //lsm6ds0_get_acc(acc, (acc+1), (acc+2));
+	  //hts221_get_temp(temper); //hts221_get_temp();
+	  //lps25hb_get_press(press);
+	  //press= lps25hb_get_press();
+
+	  temperature_out = hts221_get_temp();
+	  humidity_out = hts221_get_humid();
+	  pressure_out = lps25hb_get_pressure();
+	  	  	  /*
+	  	  	  for (i = 0; i < 100; i++) //CHECK
+	  	  	  {
+	  	  		  temperature_out = lps25hb_get_temp();
+	  	  		  altitude_i = ((pow(pressure_out/cal_pressure, (1./5.257)) - 1) * (temperature_out+273.15))/(-0.0065);
+	  	  		  sum=sum+altitude_i; //CHECK
+	  	  	  }
+
+	  	  	   altitude_out=altitude_i/100.;//CHECK
+	  	  	  */
+	  altitude_out = ((pow(pressure_out/cal_pressure, (1./5.257)) - 1) * (temperature_out+273.15))/(-0.0065);
+
 	  memset(formated_text, '\0', sizeof(formated_text));
-	  sprintf(formated_text, "%0.4f,%0.4f,%0.4f\r", acc[0], acc[1], acc[2]);
+	  sprintf(formated_text, "%2.1f,%2d,%0.4f,%0.4f,%0.4f,%0.4f\r", temperature_out, humidity_out, 0., pressure_out, altitude_out, 0.);
+	  //sprintf(formated_text, "%0.4f,%0.4f,%0.4f\r", acc[0], acc[1], acc[2]);
 	  USART2_PutBuffer((uint8_t*)formated_text, strlen(formated_text));
 	  LL_mDelay(10);
   }

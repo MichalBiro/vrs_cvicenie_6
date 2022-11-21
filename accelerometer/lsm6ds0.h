@@ -27,4 +27,4 @@ uint8_t lsm6ds0_init(void);
 void lsm6ds0_get_acc(float* x, float * y, float * z);
 uint8_t lsm6ds0_read_byte(uint8_t reg_addr);
 void lsm6ds0_write_byte(uint8_t reg_addr, uint8_t value);
-int8_t lsm6ds0_get_temp();
+int8_t* lsm6ds0_get_temp();
